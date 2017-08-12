@@ -1,0 +1,10 @@
+extends ../shared/layout
+block main-content
+  h1 Update User to Admin
+  form(method="post", action="/admins/add")
+    label(for="username") Username
+    br
+    input(type="text" name="username" id="username")
+    br
+    button(type="submit") Add
+  script(type="text/javascript").

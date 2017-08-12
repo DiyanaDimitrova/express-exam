@@ -1,0 +1,43 @@
+extends ../shared/layout
+block main-content
+  h1 Welcome to Instagram !!!
+  ul
+    if user
+     li
+        a(href='/add') Add Instagram Photo
+    if user && user.roles[0] == "Admin"
+      li
+        a(href='/admins/all') All Admins
+    if user && user.roles[0] == "Admin"
+      li
+        a(href='/admins/add') Make User Admin
+    if user
+      li
+        a(href='/profile/' + user.username) View My Profile
+
+    each photo in photos
+            li
+                img(src= photo.url, style="height:150px;")
+                div Description: #{photo.description}
+                div Views: #{photo.views}
+                div Likes: #{photo.likes.length}
+                br
+                if user
+                  if photo.likes.includes(user.username)
+                    a(href='/dislike/' + photo._id) Dislike
+                  else
+                    a(href='/like/' + photo._id) Like
+                  br
+                  if user.roles[0] == "Admin"
+                    a(href='/delete/' + photo._id) Delete
+                    br
+                    form(method="post" action="/update/" + photo._id)
+                        label(for="url") URL
+                        br
+                        input(type="text" name="url" id="url")
+                        br
+                        label(for="description") Description
+                        br
+                        input(type="text" name="description" id="description")
+                        br
+                        input(type="submit" value="Update")

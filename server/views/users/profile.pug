@@ -1,0 +1,36 @@
+extends ../shared/layout
+block main-content
+  h1 Profile
+  p Username: #{user.username}
+  p FirstName: #{user.firstName}
+  p LastName: #{user.lastName}
+  h1 Instagram Photos
+  ul
+      each photo in photosByUser
+            li
+              img(src= photo.url, style="height:150px;")
+              div Description: #{photo.description}
+              div Views: #{photo.views}
+              div Likes: #{photo.likes.length}
+              br
+              if user
+                if photo.likes.includes(user.username)
+                  a(href='/dislike/' + photo._id) Dislike
+                else
+                  a(href='/like/' + photo._id) Like
+                br
+                if user.roles[0] == "Admin"
+                  a(href='/delete/' + photo._id) Delete
+                  br
+                  form(method="post" action="/update/" + photo._id)
+                    label(for="url") URL
+                    br
+                    input(type="text" name="url" id="url")
+                    br
+                    label(for="description") Description
+                    br
+                    input(type="text" name="description" id="description")
+                    br
+                    input(type="submit" value="Update")
+
+  script(type="text/javascript").

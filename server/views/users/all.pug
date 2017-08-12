@@ -1,0 +1,7 @@
+extends ../shared/layout
+block main-content
+  h1 All Admin Users
+    ul
+        each user in users
+            li= "Username: " + user.username + " Name: " + user.firstName + " " + user.lastName
+  script(type="text/javascript").
